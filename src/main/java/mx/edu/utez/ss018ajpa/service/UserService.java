@@ -49,11 +49,10 @@ public class UserService {
         return Optional.of(userRepository.save(entity));
     }
 
-    public Optional<User> update(String newUser, User entity) {
+    public Optional<User> update(User entity) {
         Optional<User> updatedEntity = Optional.empty();
         updatedEntity = userRepository.findById(entity.getUsername());
         if (!updatedEntity.isEmpty())
-            entity.setUsername(newUser);
             userRepository.save(entity);
         return updatedEntity;
     }

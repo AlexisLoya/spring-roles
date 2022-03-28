@@ -22,6 +22,8 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">user</th>
+            <th scope="col">name</th>
+            <th scope="col">lastname</th>
             <th scope="col">status</th>
             <th scope="col-3" colspan="2">action</th>
         </tr>
@@ -30,6 +32,8 @@
         <tr th:each="user, c: ${users}">
             <td th:text="${(c.index + 1)}"></td>
             <td th:text="${user.username}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.lastname}"></td>
             <td th:text="${user.enabled}"></td>
             <td class="d-flex justify-content-around">
                 <a th:href="@{/user/edit/{id} (id=${user.username})}" class="btn btn-warning">

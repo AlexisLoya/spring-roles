@@ -19,6 +19,12 @@ public class User {
     @Column(nullable = false, unique = true, columnDefinition = "varchar(25)")
     private String username;
 
+    @Column(columnDefinition = "varchar(50)")
+    private String name;
+
+    @Column(columnDefinition = "varchar(50)")
+    private String lastname;
+
     @Column(nullable = false, columnDefinition = "varchar(150)")
     private String password;
 

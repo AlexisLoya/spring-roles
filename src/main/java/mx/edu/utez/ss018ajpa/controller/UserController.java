@@ -36,6 +36,7 @@ public class UserController {
     public String create(Model model, User user){
         model.addAttribute("navbar", "navbar-all");
         model.addAttribute("users", userService.findAllUsers());
+        model.addAttribute("roles", roleService.findAll());
         return "user/create";
     }
 
@@ -51,13 +52,13 @@ public class UserController {
             }
             
             
-            if(userService.){
+            if(userService.findOne(user.getUsername()).isEmpty()){
                 user.setEnabled(true);
                 user.setRoles(Arrays.asList(roleService.findOne("ROLE_USER").get()));
                 userService.save(user);
                 redirectAttributes.addFlashAttribute("msg_success", "guardado exitosamente");
             }else{
-                userService.update(newUser,user);
+                userService.update(user);
                 redirectAttributes.addFlashAttribute("msg_success", "editado exitosamente");
 
             }
@@ -74,7 +75,7 @@ public class UserController {
         Optional<User> user = userService.findOne(id);
         if(user.isEmpty())  return "redirect:/user/";
 
-
+        /*model.addAttribute("roles", roleService.findAll());*/
         model.addAttribute("user", user.get());
         model.addAttribute("navbar", "navbar-all");
 
