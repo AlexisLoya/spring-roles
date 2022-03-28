@@ -1,6 +1,5 @@
 package mx.edu.utez.ss018ajpa.service;
 
-import mx.edu.utez.ss018ajpa.entity.Role;
 import mx.edu.utez.ss018ajpa.entity.User;
 import mx.edu.utez.ss018ajpa.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,13 +45,15 @@ public class UserService {
     }
 
     public Optional<User> save(User entity) {
+        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         return Optional.of(userRepository.save(entity));
     }
 
-    public Optional<User> update(User entity) {
+    public Optional<User> update(String newUser, User entity) {
         Optional<User> updatedEntity = Optional.empty();
         updatedEntity = userRepository.findById(entity.getUsername());
         if (!updatedEntity.isEmpty())
+            entity.setUsername(newUser);
             userRepository.save(entity);
         return updatedEntity;
     }
@@ -79,15 +80,16 @@ public class UserService {
     }
 
     public Boolean delete(String id) {
-        boolean entity = userRepository.existsById(id);
-        if (entity) {
-            userRepository.deleteById(id);
+        Optional<User> entity = userRepository.findById(id);
+        if (entity.isPresent()) {
+            entity.get().setEnabled(false);
+            userRepository.save(entity.get());
+            return true;
         }
-        return entity;
+        return false;
     }
     public void fillInitialData() {
-        /*if (userRepository.count() > 0) return;
-*/
+        if (userRepository.count() > 0) return;
         List<User> inicial = new ArrayList<>();
         User admin = new User("admin",passwordEncoder.encode("admin"),
                 Arrays.asList(
