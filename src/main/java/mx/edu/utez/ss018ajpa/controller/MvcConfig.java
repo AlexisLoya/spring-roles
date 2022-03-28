@@ -1,4 +1,4 @@
-package mx.edu.utez.ss018ajpa;
+package mx.edu.utez.ss018ajpa.controller;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
@@ -10,10 +10,10 @@ public class MvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("home");
+       /* registry.addViewController("/").setViewName("home");
         registry.addViewController("/home").setViewName("home");
         registry.addViewController("/admin").setViewName("admin");
         registry.addViewController("/privada").setViewName("privada");
-        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/login").setViewName("login");*/
     }
 }

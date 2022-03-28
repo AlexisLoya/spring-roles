@@ -14,20 +14,39 @@
 
 <header th:replace="components/navbars:: ''+${navbar}"></header>
 <div class="container">
-    <form th:object="${user}">
-        <div class="form-group">
-            <label for="exampleInputEmail1">username</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" th:field="*{username}">
-            <small id="emailHelp" class="form-text text-muted" ></small>
-        </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" th:field="*{password}">
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-
+<h1>Bienvenido a la práctica</h1>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">user</th>
+            <th scope="col">status</th>
+            <th scope="col-3">action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="user, c: ${users}">
+            <td th:text="${(c.index + 1)}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.enabled}"></td>
+            <td class="d-flex justify-content-around">
+                <form th:action="@{/user/{id} (id=${user.username})}" method="get">
+                    <button type="submit" class="btn btn-info" onclick="((e) => { e.submit();})">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                </form>
+                <a th:href="@{/user/edit/{id} (id=${user.username})}" class="btn btn-warning">
+                    <i class="fa-solid fa-pen"></i>
+                </a>
+                <form th:action="@{/user/delete/{id} (id=${user.username})}" onsubmit="return false">
+                    <button type="submit" class="btn btn-danger" onclick="((e) => { e.submit();})">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <!-- Optional JavaScript; choose one of the two! -->

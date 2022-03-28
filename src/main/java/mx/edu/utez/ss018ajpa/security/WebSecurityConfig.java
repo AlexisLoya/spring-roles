@@ -1,4 +1,4 @@
-package mx.edu.utez.ss018ajpa;
+package mx.edu.utez.ss018ajpa.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
