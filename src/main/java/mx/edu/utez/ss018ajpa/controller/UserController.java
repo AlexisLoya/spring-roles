@@ -3,6 +3,8 @@ package mx.edu.utez.ss018ajpa.controller;
 import mx.edu.utez.ss018ajpa.entity.User;
 import mx.edu.utez.ss018ajpa.service.RoleService;
 import mx.edu.utez.ss018ajpa.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -24,13 +26,23 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
+    Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @GetMapping("")
     @Secured("ROLE_USER")
     public String findAll(Model model){
         model.addAttribute("navbar", "navbar-all");
         model.addAttribute("users", userService.findAllUsers());
+        // Logger levels DESC
+        logger.trace("TRACE level");
+        logger.debug("DEBUG level");
+        logger.info("INFO level");
+        logger.warn("WARN level");
+        logger.error("ERROR level");
+
         return "user/home";
     }
+
     @GetMapping("create")
     @Secured("ROLE_USER")
     public String create(Model model, User user){
@@ -54,13 +66,14 @@ public class UserController {
             
             if(userService.findOne(user.getUsername()).isEmpty()){
                 user.setEnabled(true);
-                user.setRoles(Arrays.asList(roleService.findOne("ROLE_USER").get()));
                 userService.save(user);
                 redirectAttributes.addFlashAttribute("msg_success", "guardado exitosamente");
             }else{
+                User oldUser = userService.findOne(user.getUsername()).get();
+                user.setPassword(oldUser.getPassword());
+                user.setEnabled(true);
                 userService.update(user);
                 redirectAttributes.addFlashAttribute("msg_success", "editado exitosamente");
-
             }
 
         } catch (Exception e) {
@@ -75,7 +88,7 @@ public class UserController {
         Optional<User> user = userService.findOne(id);
         if(user.isEmpty())  return "redirect:/user/";
 
-        /*model.addAttribute("roles", roleService.findAll());*/
+        model.addAttribute("roles", roleService.findAll());
         model.addAttribute("user", user.get());
         model.addAttribute("navbar", "navbar-all");
 

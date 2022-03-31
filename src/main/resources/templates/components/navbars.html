@@ -26,7 +26,9 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/privada}">Privada</a>
+                    <form th:action="@{/logout}" method="post" >
+                        <input class="btn btn-danger" type="submit" value="Salir" />
+                    </form>
                 </li>
             </ul>
         </div>

@@ -46,7 +46,7 @@ public class UserService {
 
     public Optional<User> save(User entity) {
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-        return Optional.of(userRepository.save(entity));
+        return Optional.of(userRepository.saveAndFlush(entity));
     }
 
     public Optional<User> update(User entity) {

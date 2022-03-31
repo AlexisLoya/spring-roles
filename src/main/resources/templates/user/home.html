@@ -24,7 +24,7 @@
             <th scope="col">user</th>
             <th scope="col">name</th>
             <th scope="col">lastname</th>
-            <th scope="col">status</th>
+            <th scope="col">roles</th>
             <th scope="col-3" colspan="2">action</th>
         </tr>
         </thead>
@@ -34,12 +34,17 @@
             <td th:text="${user.username}"></td>
             <td th:text="${user.name}"></td>
             <td th:text="${user.lastname}"></td>
+            <td>
+                <div th:each="role: ${user.roles}">
+                    <small  th:text="${role.authority}"/>
+                </div>
+            </td>
             <td th:text="${user.enabled}"></td>
             <td class="d-flex justify-content-around">
                 <a th:href="@{/user/edit/{id} (id=${user.username})}" class="btn btn-warning">
                     <i class="fa-solid fa-pen"></i>
                 </a>
-                <form th:action="@{/user/delete/{id} (id=${user.username})}" method="post">
+                <form th:action="@{/user/delete/{id} (id=${user.username})}" method="post" >
                     <button type="submit" class="btn btn-danger" onclick="((e) => { e.submit();})">
                         <i class="fa-solid fa-trash"></i>
                     </button>
@@ -48,6 +53,7 @@
         </tr>
         </tbody>
     </table>
+
 </div>
 
 <!-- Optional JavaScript; choose one of the two! -->
