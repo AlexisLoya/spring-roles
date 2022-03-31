@@ -62,15 +62,16 @@ public class UserController {
                 model.addAttribute("navbar", "navbar-all");
                 return "user/create";
             }
-            
-            
             if(userService.findOne(user.getUsername()).isEmpty()){
                 user.setEnabled(true);
                 userService.save(user);
                 redirectAttributes.addFlashAttribute("msg_success", "guardado exitosamente");
             }else{
                 User oldUser = userService.findOne(user.getUsername()).get();
-                user.setPassword(oldUser.getPassword());
+                if(user.getPassword().isEmpty()){
+                    user.setPassword(oldUser.getPassword());
+                }
+
                 user.setEnabled(true);
                 userService.update(user);
                 redirectAttributes.addFlashAttribute("msg_success", "editado exitosamente");

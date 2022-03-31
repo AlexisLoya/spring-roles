@@ -53,6 +53,7 @@ public class UserService {
         Optional<User> updatedEntity = Optional.empty();
         updatedEntity = userRepository.findById(entity.getUsername());
         if (!updatedEntity.isEmpty())
+            entity.setPassword(passwordEncoder.encode(entity.getPassword()));
             userRepository.save(entity);
         return updatedEntity;
     }
